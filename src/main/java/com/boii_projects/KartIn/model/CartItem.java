@@ -33,7 +33,7 @@ public class CartItem {
     @JoinColumn(name ="cart_id")
     private Cart cart;
 
-    public void setTotalOrice(){
+    public void setTotalPrice(){
         this.totalPrice = this.unitPrice.multiply(new BigDecimal(quantity));
     }
 

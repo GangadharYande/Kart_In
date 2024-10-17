@@ -2,15 +2,13 @@ package com.boii_projects.KartIn.service.cart;
 
 import com.boii_projects.KartIn.exceptions.ResourceNotFoundException;
 import com.boii_projects.KartIn.model.Cart;
-import com.boii_projects.KartIn.model.CartItem;
-import com.boii_projects.KartIn.model.Product;
 import com.boii_projects.KartIn.repository.CartItemRepository;
 import com.boii_projects.KartIn.repository.CartRepository;
-import com.boii_projects.KartIn.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +16,7 @@ public class CartService implements ICartService {
 
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+    private final AtomicLong cartIdGenerator = new AtomicLong(0);
 
 
     @Override
@@ -43,6 +42,19 @@ public class CartService implements ICartService {
     public BigDecimal getTotalPrice(Long id) {
         Cart cart = getCart(id);
         return cart.getTotalAmount();
+    }
+
+    @Override
+    public Long initializeNewCart() {
+        Cart newCart = new Cart();
+        Long newCartId = cartIdGenerator.incrementAndGet();
+        newCart.setId(newCartId);
+        return cartRepository.save(newCart).getId();
+    }
+
+    @Override
+    public Cart getCartByUserId(Long userId) {
+        return cartRepository.findByUserId(userId);
     }
 
 }

@@ -43,8 +43,12 @@ public class CartItemService  implements ICartItemService{
         else {
             cartItem.setQuantity(cartItem.getQuantity() + quantity);
         }
-        BigDecimal totalPrice = cartItem.getUnitPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity()));
-        cartItem.setTotalPrice(totalPrice);
+//        BigDecimal totalPrice = cartItem.getUnitPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity()));
+//        cartItem.setTotalPrice(totalPrice);
+//        cart.addItem(cartItem);
+//        cartItemRepository.save(cartItem);
+//        cartRepository.save(cart);
+        cartItem.setTotalPrice();
         cart.addItem(cartItem);
         cartItemRepository.save(cartItem);
         cartRepository.save(cart);
